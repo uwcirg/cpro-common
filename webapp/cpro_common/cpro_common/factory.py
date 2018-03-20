@@ -8,7 +8,7 @@ migrate = Migrate()
 
 
 def create_app(config=None):
-    app = Flask('cpro-common')
+    app = Flask('cpro-common', template_folder='cpro_common/templates', static_folder='cpro_common/static')
 
     app.config.update(dict(
         Debug=True,

@@ -15,13 +15,13 @@ class ConfirmForm(BaseForm):
 
 
 class LoginConfirmForm(BaseForm):
-    email = EmailField(description='Correo electrónico', validators=[DataRequired()])
-    password = PasswordField(description='Contraseña', validators=[DataRequired()])
+    email = EmailField(description='Email', validators=[DataRequired()])
+    password = PasswordField(description='Password', validators=[DataRequired()])
 
     def validate_password(self, field):
         email = self.email.data.lower()
         user = User.query.filter_by(email=email).first()
         if not user or not user.check_password(field.data):
-            raise StopValidation('El correo electrónico que ingresaste no coinciden con ninguna cuenta.')
+            raise StopValidation('Cannot find your account.')
 
         login(user, False)

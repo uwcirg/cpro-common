@@ -9,8 +9,8 @@ from ..auth import login
 
 
 class AuthenticateForm(BaseForm):
-    email = EmailField(description='Correo electrónico', validators=[DataRequired()])
-    password = PasswordField(description='Contraseña', validators=[DataRequired()])
+    email = EmailField(description='Email', validators=[DataRequired()])
+    password = PasswordField(description='Password', validators=[DataRequired()])
  
     def __init__(self, *args, **kwargs):
         super(AuthenticateForm, self).__init__(*args, **kwargs)
@@ -20,7 +20,7 @@ class AuthenticateForm(BaseForm):
         email = self.email.data.lower()
         user = User.query.filter_by(email=email).first()
         if not user or not user.check_password(field.data):
-            raise StopValidation('El correo electrónico que ingresaste no coinciden con ninguna cuenta.')
+            raise StopValidation('This email cannot be found.')
         self._user = user
 
     def login(self):
@@ -29,14 +29,14 @@ class AuthenticateForm(BaseForm):
 
 
 class UserCreationForm(BaseForm):
-    email = EmailField(description='Correo electrónico', validators=[DataRequired()])
-    password = PasswordField(description='Contraseña', validators=[DataRequired()])
+    email = EmailField(description='Email', validators=[DataRequired()])
+    password = PasswordField(description='Password', validators=[DataRequired()])
 
     def validate_email(self, field):
         email = field.data.lower()
         user = User.query.filter_by(email=email).first()
         if user:
-            raise StopValidation('Este correo electrónico existe.')
+            raise StopValidation('An account for this email already exists')
 
     def signup(self):
         email = self.email.data.lower()
@@ -50,21 +50,6 @@ class UserCreationForm(BaseForm):
         except:
             db.session.rollback()
             raise
-        
-
-        patient = Patient(id=user.get_user_id(), MRN=user.get_user_id(), test_flag=0, ethnicity='na')
-        acl_leaf = UserAclLeaf(user_id=user.get_user_id(), acl_alias='aclParticipantTreatment')
-        id_p = IdentityProvider(user_id=user.get_user_id(), idp='truenth')
-
-        try:
-            db.session.add(user)
-            db.session.add(patient)
-            db.session.add(acl_leaf)
-            db.session.add(id_p)
-            db.session.commit()
-        except:
-            db.session.rollback()
-            raise
-
+       
         login(user, True)
         return user

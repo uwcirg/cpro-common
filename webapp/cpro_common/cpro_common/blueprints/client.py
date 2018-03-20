@@ -21,13 +21,10 @@ def list_clients():
     )
 
 
-@bp.route('/<int:version>/create', methods=['GET', 'POST'])
+@bp.route('/create', methods=['GET', 'POST'])
 @require_login
 def create_client(version):
-    if version == 1:
-        form = Client1Form()
-    else:
-        form = Client2Form()
+    form = Client2Form()
 
     if form.validate_on_submit():
         form.save(current_user)
@@ -35,19 +32,14 @@ def create_client(version):
     return render_template('client/create.html', form=form)
 
 
-@bp.route('/<int:version>/<client_id>', methods=['GET', 'POST'])
+@bp.route('/<client_id>', methods=['GET', 'POST'])
 @require_login
 def edit_client(version, client_id):
-    if version == 1:
-        client = OAuth1Client.query.filter_by(client_id=client_id).first()
-        if not client or client.user_id != current_user.id:
-            abort(404)
-        form = Client1Form(obj=client)
-    else:
-        client = OAuth2Client.query.filter_by(client_id=client_id).first()
-        if not client or client.user_id != current_user.id:
-            abort(404)
-        form = Client2Form(obj=OAuth2ClientWrapper(client))
+
+    client = OAuth2Client.query.filter_by(client_id=client_id).first()
+    if not client or client.user_id != current_user.id:
+        abort(404)
+    form = Client2Form(obj=OAuth2ClientWrapper(client))
 
     if form.validate_on_submit():
         form.update(client)

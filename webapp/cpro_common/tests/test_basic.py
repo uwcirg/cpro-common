@@ -7,7 +7,7 @@ import sqlite3
 import tempfile
 
 from app import app
-from app.models import db
+from cpro_common.models import db
 
 
 TEST_DB = 'test.db'

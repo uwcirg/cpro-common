@@ -1,0 +1,13 @@
+{% extends "account/base.html" %}
+{% from "macros.html" import render_form %}
+
+{% block form %}
+  <form action="" method="post">
+    {{ render_form(form) }}
+    <div role="toolbar" class="signin-toolbar btn-toolbar">
+      <button class="btn btn-primary btn-lg btn-block">Login</button>
+      <a href='' class='btn btn-default btn-lg btn-block btn-outline-dark'><img src="{{ url_for('static', filename='images/hyperspace.png') }}" height='30' />&nbsp;&nbsp;Hyperspace Login</a>
+      <a href='' class='btn btn-default btn-lg btn-block btn-outline-dark'><img src="{{ url_for('static', filename='images/mychart.jpg') }}" height='30' />&nbsp;&nbsp;MyChart Login</a>
+    </div>
+  </form>
+{% endblock %}

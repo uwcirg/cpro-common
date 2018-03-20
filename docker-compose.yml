@@ -21,7 +21,7 @@ services:
     environment:
       WAIT_HOSTS: cpro-common-db:3306, dhair2-db:3306
       WAIT_BEFORE_HOSTS: 10
-      FLASK_APP: "cpro_common.py"
+      FLASK_APP: "cpro_common_app.py"
       FLASK_DEBUG: 1
       AUTHLIB_INSECURE_TRANSPORT: 'true'
       MODE: 'dev'

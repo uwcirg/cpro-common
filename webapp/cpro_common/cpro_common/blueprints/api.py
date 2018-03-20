@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, make_response, jsonify, flash, redirect, url_for, request, current_app
-from app.models.cpro import Patient, MpowerUser
+from cpro_common.models.cpro import Patient, MpowerUser
 
 
 bp = Blueprint('api', __name__)
