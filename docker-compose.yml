@@ -6,7 +6,7 @@ services:
       context: ./webapp
       dockerfile: Dockerfile
     ports:
-     - "5060:5000"
+     - "8080:5000"
     volumes:
       - "./webapp/cpro_common:/usr/src/app"
     links:
