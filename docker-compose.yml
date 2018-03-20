@@ -1,6 +1,6 @@
 version: '3.3'
 services:
-  web:
+  portal:
     restart: always
     build:
       context: ./webapp
@@ -8,67 +8,65 @@ services:
     ports:
      - "5060:5000"
     volumes:
-      - "./webapp/tbapi:/usr/src/app"
+      - "./webapp/cpro-common:/usr/src/app"
     links:
-      - mpower-db
-      - tbapp-db
-    container_name: tb-api
+      - dhair2-db
+      - cpro-common-db
+    container_name: cpro-common
     stdin_open: true
     tty: true
     depends_on:
-      - mpower-db
-      - tbapp-db
+      - cpro-common-db
+      - dhair2-db
     environment:
-      WAIT_HOSTS: mpower-db:3306, tbapp-db:3306
+      WAIT_HOSTS: cpro-common-db:3306, dhair2-db:3306
       WAIT_BEFORE_HOSTS: 10
-      #FLASK_APP: "tbapi.factory:create_app()"
-      FLASK_APP: "tbapi_app.py"
+      FLASK_APP: "cpro_common.py"
       FLASK_DEBUG: 1
       AUTHLIB_INSECURE_TRANSPORT: 'true'
       MODE: 'dev'
     networks:
-      - tbapi
-  mpower-db:
+      - cpro-common
+  dhair2-db:
     restart: always
     image: mysql:5.7
-    hostname: mpower-db
+    hostname: dhair2-db
     volumes:
-      - "./db/sql/mpower-db:/docker-entrypoint-initdb.d"
+      - "./db/sql/dhair2-db:/docker-entrypoint-initdb.d"
       - type: volume
-        source: mpower-db
+        source: dhair2-db
         target: /var/lib/mysql
     ports:
       - "3306:3306"
-    container_name: mpower-db
+    container_name: dhair2-db
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: mpower_demo
-      MYSQL_USER: mpower
-      MYSQL_PASSWORD: mpower
+      MYSQL_DATABASE: dhair_demo
+      MYSQL_USER: dhair
+      MYSQL_PASSWORD: dhair
     networks:
-      - tbapi
-  tbapp-db:
+      - cpro-common
+  cpro-common-db:
     restart: always
     image: mysql:5.7
-    hostname: tbapp-db
+    hostname: cpro-common-db
     volumes:
-      - "./db/sql/tbapp-db:/docker-entrypoint-initdb.d"
+      - "./db/sql/cpro-common-db:/docker-entrypoint-initdb.d"
       - type: volume
-        source: tbapp-db
+        source: cpro-common-db
         target: /var/lib/mysql
     ports:
       - "3307:3306"
-    container_name: tbapp-db
+    container_name: cpro-common-db
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: tbapi
-      MYSQL_USER: tbapi
-      MYSQL_PASSWORD: tbapi
+      MYSQL_DATABASE: cpro_common  
+      MYSQL_USER: cpro
+      MYSQL_PASSWORD: cpro
     networks:
-      - tbapi
+      - cpro-common
 volumes:
-  tbapi-app:
-  mpower-db:
-  tbapp-db:
+  cpro-common-db:
+  dhair-db:
 networks:
-  tbapi:
+  cpro-common:

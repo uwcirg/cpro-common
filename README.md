@@ -1,6 +1,4 @@
-# tb API
-
-A simplified FHIR-based backend API application using the mPOWEr data model.
+# CPro Common
 
 ## Setup
 (see https://docs.docker.com/compose/gettingstarted/)
@@ -8,19 +6,19 @@ A simplified FHIR-based backend API application using the mPOWEr data model.
 1. Install Docker and Docker compose.
 2.  Clone project into desired working directory:
     ```
-    git clone https://github.com/uwcirg/tb-api.git
+    git clone https://github.com/uwcirg/cpro-common.git
     ```
 3.  Build and run the containers
     ```
-    cd tb-api
+    cd cpro-common
     docker-compose build
     docker-compose up -d
     ```
 
-4. Navigate to http://localhost:5000/hello. You should get an `Welcome to mPOWEr!` message.
+4. Navigate to http://localhost:5000/hello. You should get an `Welcome to CPro!` message.
 
 ## Debugging / Playing Around
-The database is created using the `initdb.sql` file in the `/db/sql/` directory. The database container uses the volume `tbapi-db` for database data. It also maps a
+The database is created using the `initdb.sql` file in the `/db/sql/` directory. The database container uses the volume `cpro-common-db` for database data. It also maps a
 2nd volume for initializing the database, which only happens if the main volume does not exist yet (I think).
 
 The database container also exposes the mysql port (3306) as port 6603 externally.
@@ -28,7 +26,7 @@ The database container also exposes the mysql port (3306) as port 6603 externall
 To (1) re-create the db, (2) re-load it with data from initdb.sql, and (3) connect to it from the host machine (command-line mysql client or workbench):
 
 ```
-cd tb-api
+cd cpro-common
 docker-compose down -v
 docker-compose up -d --build db
 
@@ -54,7 +52,7 @@ docker-compose up -d --build
 Start-Process -NoNewWindow docker-volume-watcher mysite
 
 # Start interactive shell connected to dev container
-docker exec -it mpower-app bash
+docker exec -it cpro-common-app bash
 
 # Run flask shell inside interactive shell
 > flask shell
