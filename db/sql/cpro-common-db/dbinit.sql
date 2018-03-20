@@ -1,8 +1,6 @@
-CREATE DATABASE  IF NOT EXISTS `tbapi` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `tbapi`;
 -- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
--- Host: localhost    Database: tbapi
+-- Host: localhost    Database: cpro_common
 -- ------------------------------------------------------
 -- Server version	5.7.21
 
@@ -36,8 +34,39 @@ CREATE TABLE `alembic_version` (
 
 LOCK TABLES `alembic_version` WRITE;
 /*!40000 ALTER TABLE `alembic_version` DISABLE KEYS */;
-INSERT INTO `alembic_version` VALUES ('a0a902e9fba9');
+INSERT INTO `alembic_version` VALUES ('e7c930963743');
 /*!40000 ALTER TABLE `alembic_version` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `connect`
+--
+
+DROP TABLE IF EXISTS `connect`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `connect` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `sub` varchar(255) DEFAULT NULL,
+  `user_id` int(11) NOT NULL,
+  `name` varchar(20) NOT NULL,
+  `token_type` varchar(20) DEFAULT NULL,
+  `access_token` varchar(255) NOT NULL,
+  `alt_token` varchar(255) DEFAULT NULL,
+  `expires_at` int(11) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uc_connect` (`user_id`,`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `connect`
+--
+
+LOCK TABLES `connect` WRITE;
+/*!40000 ALTER TABLE `connect` DISABLE KEYS */;
+/*!40000 ALTER TABLE `connect` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -135,6 +164,34 @@ LOCK TABLES `oauth2_token` WRITE;
 INSERT INTO `oauth2_token` VALUES ('skwIPnbi7N3uIvNysUbi0xfXwnWaIMR1MCJxz8rV0dGxeMJD','Bearer','YCKFtgasJwYoq7C6nPDcryJwuHqpXAn3Q1ErobdCFB',NULL,'email',1520153873,3600,1,647);
 /*!40000 ALTER TABLE `oauth2_token` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `user`
+--
+
+DROP TABLE IF EXISTS `user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(100) DEFAULT NULL,
+  `name` varchar(80) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user`
+--
+
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -145,4 +202,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-04 10:18:09
+-- Dump completed on 2018-03-20 12:14:40

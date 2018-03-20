@@ -8,12 +8,12 @@ services:
     ports:
      - "5060:5000"
     volumes:
-      - "./webapp/cpro-common:/usr/src/app"
+      - "./webapp/cpro_common:/usr/src/app"
     links:
       - dhair2-db
       - cpro-common-db
     container_name: cpro-common
-    stdin_open: true
+    stdin_open  : true
     tty: true
     depends_on:
       - cpro-common-db
@@ -41,7 +41,7 @@ services:
     container_name: dhair2-db
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: dhair_demo
+      MYSQL_DATABASE: dhair2_demo
       MYSQL_USER: dhair
       MYSQL_PASSWORD: dhair
     networks:
@@ -67,6 +67,6 @@ services:
       - cpro-common
 volumes:
   cpro-common-db:
-  dhair-db:
+  dhair2-db:
 networks:
   cpro-common:
