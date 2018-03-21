@@ -23,7 +23,7 @@ def list_clients():
 
 @bp.route('/create', methods=['GET', 'POST'])
 @require_login
-def create_client(version):
+def create_client():
     form = Client2Form()
 
     if form.validate_on_submit():
@@ -34,7 +34,7 @@ def create_client(version):
 
 @bp.route('/<client_id>', methods=['GET', 'POST'])
 @require_login
-def edit_client(version, client_id):
+def edit_client(client_id):
 
     client = OAuth2Client.query.filter_by(client_id=client_id).first()
     if not client or client.user_id != current_user.id:

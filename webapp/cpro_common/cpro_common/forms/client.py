@@ -32,13 +32,13 @@ class OAuth2ClientWrapper(object):
 
 
 class Client2Form(BaseForm):
-    name = StringField(validators=[DataRequired()])
-    website = URLField()
+    name = StringField(description='Client Name', validators=[DataRequired()])
+    website = URLField(description='Website')
     is_confidential = BooleanField('Confidential Client')
-    redirect_uris = TextAreaField()
-    default_redirect_uri = URLField()
-    allowed_scopes = SelectMultipleField(choices=SCOPES)
-    allowed_grants = SelectMultipleField(choices=GRANTS)
+    redirect_uris = TextAreaField(description='Redirect URIs')
+    default_redirect_uri = URLField(description='Default Redirect URI')
+    allowed_scopes = SelectMultipleField(description='Scopes', choices=SCOPES)
+    allowed_grants = SelectMultipleField(description='Grants', choices=GRANTS)
 
     def update(self, client):
         client.name = self.name.data
@@ -75,7 +75,7 @@ class Client2Form(BaseForm):
         )
         
         try:
-            db.session.add(user)
+            db.session.add(client)
             db.session.commit()
         except:
             db.session.rollback()

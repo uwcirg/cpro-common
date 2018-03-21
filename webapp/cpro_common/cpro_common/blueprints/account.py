@@ -9,11 +9,11 @@ bp = Blueprint('account', __name__)
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user:
-        return redirect(url_for('static.hello'))
+        return redirect(url_for('client.list_clients'))
     form = AuthenticateForm()
     if form.validate_on_submit():
         form.login()
-        return redirect(url_for('static.hello'))
+        return redirect(url_for('client.list_clients'))
     return render_template('account/login.html', form=form)
 
 
@@ -26,11 +26,11 @@ def logout():
 @bp.route('/signup', methods=['GET', 'POST'])
 def signup():
     if current_user:
-        return redirect("https://tb-mobile.cirg.washington.edu/")
+        return redirect(url_for('client'))
     form = UserCreationForm()
     if form.validate_on_submit():
         form.signup()
-        return redirect("https://tb-mobile.cirg.washington.edu/")
+        return redirect(url_for('client'))
     return render_template('account/signup.html', form=form)
 
 @bp.route('/myaccount', methods=['GET'])

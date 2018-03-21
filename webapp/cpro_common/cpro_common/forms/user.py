@@ -4,7 +4,7 @@ from wtforms.validators import DataRequired
 from wtforms.validators import StopValidation
 from .base import BaseForm
 from ..models import db
-from ..models.cpro import * 
+from ..models.user import User
 from ..auth import login
 
 
