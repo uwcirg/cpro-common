@@ -37,11 +37,11 @@ def get_current_user():
 current_user = LocalProxy(get_current_user)
 
 
-# def fetch_token(name):
-#     user = get_current_user()
-#     conn = Connect.query.filter_by(
-#         user_id=user.id, name=name).first()
-#     return conn.to_dict()
+def fetch_token(name):
+    user = get_current_user()
+    conn = Connect.query.filter_by(
+        user_id=user.id, name=name).first()
+    return conn.to_dict()
 
 
 def require_login(f):
@@ -54,7 +54,7 @@ def require_login(f):
     return decorated
 
 
-# oauth = OAuth(fetch_token=fetch_token)
+oauth = OAuth(fetch_token=fetch_token)
 
 # def init_app(app):
 #     oauth.init_app(app)
