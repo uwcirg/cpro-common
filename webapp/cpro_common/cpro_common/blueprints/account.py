@@ -26,7 +26,7 @@ def logout():
 @bp.route('/signup', methods=['GET', 'POST'])
 def signup():
     if current_user:
-        return redirect(url_for('client'))
+        return redirect(url_for('client.list_clients'))
     form = UserCreationForm()
     if form.validate_on_submit():
         form.signup()
