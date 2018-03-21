@@ -36,7 +36,6 @@ def get_current_user():
 
 current_user = LocalProxy(get_current_user)
 
-
 def fetch_token(name):
     user = get_current_user()
     conn = Connect.query.filter_by(
@@ -56,5 +55,17 @@ def require_login(f):
 
 oauth = OAuth(fetch_token=fetch_token)
 
-# def init_app(app):
-#     oauth.init_app(app)
+def init_app(app):
+    oauth.init_app(app)
+    oauth.register('epic',
+    client_id='',
+    client_secret='',
+    request_token_url='https://api.twitter.com/oauth/request_token',
+    request_token_params=None,
+    access_token_url='https://api.twitter.com/oauth/access_token',
+    access_token_params=None,
+    refresh_token_url=None,
+    authorize_url='https://api.twitter.com/oauth/authenticate',
+    api_base_url='https://api.twitter.com/1.1/',
+    client_kwargs=None,
+)

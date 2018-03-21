@@ -3,6 +3,7 @@ from . import client
 from . import oauth2
 from . import api
 from . import static
+from . import connect
 
 def init_app(app):
     app.register_blueprint(account.bp, url_prefix='/account')

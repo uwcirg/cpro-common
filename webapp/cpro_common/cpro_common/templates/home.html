@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 
 {% block body %}
-  <section class="section">
-    <div class="inner">
+  <div class="row">
+    <div class="col">
       {% if current_user %}
         <p>You are logged in as <strong>{{ current_user.name }}</strong></p>
         <div class="account_actions">
@@ -18,7 +18,7 @@
         </div>
       {% endif %}
     </div>
-  </section>
+  </div>
   
   <footer class="section">
     <div class="inner">

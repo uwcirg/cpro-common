@@ -41,8 +41,7 @@ class UserCreationForm(BaseForm):
     def signup(self):
         email = self.email.data.lower()
         user = User(email=email)
-        user.pw = self.password.data
-
+        user.password = self.password.data
 
         try:
             db.session.add(user)
