@@ -30,7 +30,7 @@ def signup():
     form = UserCreationForm()
     if form.validate_on_submit():
         form.signup()
-        return redirect(url_for('client'))
+        return redirect(url_for('client.list_clients'))
     return render_template('account/signup.html', form=form)
 
 @bp.route('/myaccount', methods=['GET'])
