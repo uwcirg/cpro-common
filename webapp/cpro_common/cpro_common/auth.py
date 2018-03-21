@@ -52,9 +52,8 @@ def require_login(f):
         return f(*args, **kwargs)
     return decorated
 
-
 oauth = OAuth(fetch_token=fetch_token)
-
+    
 def init_app(app):
     oauth.init_app(app)
     oauth.register('epic',

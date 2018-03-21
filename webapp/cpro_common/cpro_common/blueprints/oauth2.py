@@ -20,7 +20,7 @@ def authorize():
     if (form and form.validate_on_submit()) or current_user:
         grant_user = current_user
         return authorization.create_authorization_response(grant_user)
-
+    
     try:
         grant = authorization.validate_authorization_request()
     except OAuth2Error as error:
@@ -39,11 +39,11 @@ def authorize():
     )
 
 
-@bp.route('/token', methods=['POST'])
-def issue_token():
+@bp.route('/token', methods=['POST', 'GET'])
+def issue_token(): 
     return authorization.create_token_response()
 
-
-@bp.route('/revoke', methods=['POST'])
+ 
+@bp.route('/revoke', methods=['POST', 'GET'])
 def revoke_token():
     return authorization.create_revocation_response()
