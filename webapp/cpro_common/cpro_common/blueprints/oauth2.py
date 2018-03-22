@@ -1,5 +1,5 @@
 from flask import Blueprint, request
-from flask import jsonify, render_template
+from flask import jsonify, render_template, current_app
 from authlib.specs.rfc6749 import OAuth2Error
 from ..models import OAuth2Client
 from ..auth import current_user
@@ -41,6 +41,7 @@ def authorize():
 
 @bp.route('/token', methods=['POST', 'GET'])
 def issue_token(): 
+    current_app.logger.info("HI THERE")
     return authorization.create_token_response()
 
  
