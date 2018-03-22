@@ -61,5 +61,13 @@ def init_app(app):
         access_token_url='',
         authorize_url='',
         api_base_url='',
-        client_kwargs=None,
+        kwargs={'scope': 'patient/* launch', 'launch': ''}
+    )
+
+    oauth.register('mychart',
+        client_id='419c0894-f882-4aef-976a-0cfa52b95691',
+        access_token_url='',
+        authorize_url='',
+        api_base_url='',
+        kwargs={'scope': 'patient/* launch', 'launch': ''}
     )

@@ -19,12 +19,29 @@ def launch():
     oauth.epic.api_base_url = request.args.get("iss")
     oauth.epic.authorize_url = parsed_body.findall('.//*[@url="authorize"]*')[0].attrib['value']
     oauth.epic.access_token_url = parsed_body.findall('.//*[@url="token"]*')[0].attrib['value']
-    oauth.epic.launch = request.args.get('launch')
-    oauth.epic.state = '1342' # TODO: change!
+    oauth.epic.client_kwargs['launch'] = request.args.get('launch')
 
-    redirect_uri = url_for('connect.callback', _external=True)
+    redirect_uri = url_for('connect.callback', _external=True, _scheme='https')
 
-    return oauth.epic.authorize_redirect(redirect_uri)
+    return oauth.epic.authorize_redirect(redirect_uri, launch = oauth.epic.client_kwargs['launch'])
+
+@bp.route('/launch/mychart')
+def launch_mychart():
+    # Handle iss, launch token
+    conformance_uri = request.args.get("iss") + '/metadata'
+    metadata_request = requests.get(conformance_uri)
+    parsed_body = ET.fromstring(metadata_request.text)
+    
+    oauth.mychart.api_base_url = request.args.get("iss")
+    oauth.mychart.authorize_url = parsed_body.findall('.//*[@url="authorize"]*')[0].attrib['value']
+    oauth.mychart.access_token_url = parsed_body.findall('.//*[@url="token"]*')[0].attrib['value']
+    oauth.epic.client_kwargs['launch'] = request.args.get('launch')
+
+    redirect_uri = url_for('connect.callback', _external=True, _scheme='https')
+    
+    return oauth.mychart.authorize_redirect(redirect_uri, launch = oauth.epic.client_kwargs['launch'])
+
+
 
 @bp.route('/callback/epic')
 def callback():
@@ -33,7 +50,7 @@ def callback():
 
 
     client = oauth.epic
-    token = client.authorize_access_token()
+    token = client.authorize_access_token(scope='patient/* launch')
     
     ## Get patient id and other params here too! and save them
 
@@ -43,23 +60,47 @@ def callback():
 
     # # token['sub'] = user_info.sub
     
-    Connect.create_token(name, token, current_user)
-    
+    Connect.create_token('epic', token, current_user)
+       
 
     # # Redirect to correct cPRO App
-    # return redirect(url_for('.list_connects'))
+    return redirect(url_for('connect.list_connects'))
 
-# @bp.route('')
-# @require_login
-# def list_connects():
-#     services = oauth._registry.keys()
-#     q = Connect.query.filter_by(user_id=current_user.id)
-#     connects = {item.name: item for item in q}
-#     return render_template(
-#         'connects.html',
-#         connects=connects,
-#         services=services,
-#     )
+@bp.route('/callback/mychart')
+def callback_mychart():
+    state = request.args.get("state")
+    code = request.args.get("code")
+
+
+    client = oauth.epic
+    token = client.authorize_access_token(scope='patient/* launch')
+    
+    ## Get patient id and other params here too! and save them
+
+    # jj
+    # # Get the relevant user info
+    # # user_info = service.profile()
+
+    # # token['sub'] = user_info.sub
+    
+    Connect.create_token('epic', token, current_user)
+       
+
+    # # Redirect to correct cPRO App
+    return redirect(url_for('connect.list_connects'))
+
+
+@bp.route('/connects')
+@require_login
+def list_connects():
+    services = oauth._registry.keys()
+    q = Connect.query.filter_by(user_id=current_user.id)
+    connects = {item.name: item for item in q}
+    return render_template(
+        'connects.html',
+        connects=connects,
+        services=services,
+    )
 
 
 # @bp.route('/bind/<name>')

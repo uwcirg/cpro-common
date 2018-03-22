@@ -11,9 +11,9 @@
           <h2>{{ name }}</h2>
           {% if name in connects %}
             <p>Connected as <strong>{{ connects[name].sub }}</strong></p>
-            <div><a class="btn" href="{{ url_for('.bind', name=name) }}">Re-Connect</a></div>
+            
           {% else %}
-            <div><a class="btn" href="{{ url_for('.bind', name=name) }}">Connect</a></div>
+            
           {% endif %}
         </div>
       {% endfor %}
