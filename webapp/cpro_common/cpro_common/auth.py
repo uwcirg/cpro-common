@@ -57,14 +57,9 @@ oauth = OAuth(fetch_token=fetch_token)
 def init_app(app):
     oauth.init_app(app)
     oauth.register('epic',
-    client_id='',
-    client_secret='',
-    request_token_url='https://api.twitter.com/oauth/request_token',
-    request_token_params=None,
-    access_token_url='https://api.twitter.com/oauth/access_token',
-    access_token_params=None,
-    refresh_token_url=None,
-    authorize_url='https://api.twitter.com/oauth/authenticate',
-    api_base_url='https://api.twitter.com/1.1/',
-    client_kwargs=None,
-)
+        client_id='7024ba74-0e17-42b4-b988-7fee02f4c7e2',
+        access_token_url='',
+        authorize_url='',
+        api_base_url='',
+        client_kwargs=None,
+    )

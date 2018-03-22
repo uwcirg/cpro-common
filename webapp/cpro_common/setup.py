@@ -12,7 +12,9 @@ setup(
         'PyMySQL',
         'Flask-Migrate',
         'flask-cors',
-        'Authlib[crypto]==0.5.1'
+        'Authlib[crypto]==0.5.1',
+        'requests',
+        'untangle'
     ],
     setup_requires=[
         'pytest-runner',
