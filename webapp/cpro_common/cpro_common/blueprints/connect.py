@@ -17,13 +17,12 @@ def launch():
     parsed_body = ET.fromstring(metadata_request.text)
     
     oauth.epic.api_base_url = request.args.get("iss")
-    oauth.epic.access_token_url = parsed_body.findall('.//*[@url="authorize"]*')[0].attrib['value']
-    oauth.epic.authorize_url = parsed_body.findall('.//*[@url="token"]*')[0].attrib['value']
+    oauth.epic.authorize_url = parsed_body.findall('.//*[@url="authorize"]*')[0].attrib['value']
+    oauth.epic.access_token_url = parsed_body.findall('.//*[@url="token"]*')[0].attrib['value']
     oauth.epic.launch = request.args.get('launch')
     oauth.epic.state = '1342' # TODO: change!
-    
-    ccc
-    redirect_uri = url_for('connect.callback', name='epic', _external=True)
+
+    redirect_uri = url_for('connect.callback', _external=True)
 
     return oauth.epic.authorize_redirect(redirect_uri)
 
@@ -31,6 +30,7 @@ def launch():
 def callback():
     state = request.args.get("state")
     code = request.args.get("code")
+
 
     client = oauth.epic
     token = client.authorize_access_token()
