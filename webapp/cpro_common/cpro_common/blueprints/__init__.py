@@ -7,7 +7,7 @@ from . import connect
 
 def init_app(app):
     app.register_blueprint(account.bp, url_prefix='/account')
-    app.register_blueprint(connect.bp, url_prefix='/connect')
+    app.register_blueprint(connect.bp, url_prefix='')
     app.register_blueprint(client.bp, url_prefix='/client')
     app.register_blueprint(oauth2.bp, url_prefix='/oauth2')
     app.register_blueprint(api.bp, url_prefix='/api/v1.0')
