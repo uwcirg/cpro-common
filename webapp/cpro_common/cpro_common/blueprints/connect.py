@@ -2,10 +2,12 @@ from flask import Blueprint, url_for
 from flask import render_template, abort, redirect, request
 from authlib.client.apps import get_app
 from ..auth import oauth, require_login, current_user
-from ..models.user import Connect
+from ..models import db
+from ..auth import login
+from ..models.user import Connect, User
 import requests
 import xml.etree.ElementTree as ET
-
+import uuid
 
 bp = Blueprint('connect', __name__)
 
@@ -22,7 +24,6 @@ def launch():
     oauth.epic.client_kwargs['launch'] = request.args.get('launch')
 
     redirect_uri = url_for('connect.callback', _external=True, _scheme='https')
-
     return oauth.epic.authorize_redirect(redirect_uri, launch = oauth.epic.client_kwargs['launch'])
 
 @bp.route('/launch/mychart')
@@ -52,9 +53,18 @@ def callback():
     client = oauth.epic
     token = client.authorize_access_token(scope='patient/* launch')
     
-    ## Get patient id and other params here too! and save them
+    ## Get patient id and other params here too! and save them    
+    user = User(name=token['EPICUSERID'], email=token['EPICUSERID']+"@"+str(uuid.uuid1()))
 
-    # jj
+    try:
+        db.session.add(user)
+        db.session.commit()
+    except:
+        db.session.rollback()
+        raise
+    
+    login(user, True)
+    
     # # Get the relevant user info
     # # user_info = service.profile()
 
@@ -64,7 +74,7 @@ def callback():
        
 
     # # Redirect to correct cPRO App
-    return redirect(url_for('connect.list_connects'))
+    return redirect(url_for('connect.menu'))
 
 @bp.route('/callback/mychart')
 def callback_mychart():
@@ -87,7 +97,7 @@ def callback_mychart():
        
 
     # # Redirect to correct cPRO App
-    return redirect(url_for('connect.list_connects'))
+    return redirect(url_for('connect.menu'))
 
 
 @bp.route('/connects')
@@ -102,6 +112,12 @@ def list_connects():
         services=services,
     )
 
+@bp.route('/menu')
+@require_login
+def menu():
+    return render_template(
+        'menu.html'
+    )
 
 # @bp.route('/bind/<name>')
 # @require_login
