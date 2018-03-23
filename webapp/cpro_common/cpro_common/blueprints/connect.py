@@ -16,7 +16,6 @@ def launch():
     # Handle iss, launch token
     conformance_uri = request.args.get("iss") + '/metadata'
     metadata_request = requests.get(conformance_uri)
-    dd
     parsed_body = ET.fromstring(metadata_request.text)
     
     oauth.epic.api_base_url = request.args.get("iss")
@@ -53,7 +52,6 @@ def callback():
 
     client = oauth.epic
     token = client.authorize_access_token(scope='patient/* launch')
-    dd
 
     url = "DSTU2/Patient/"+token['patient']
     patient_data = client.get(url).text # TODO: , headers={'Content-type': 'application/json'})
@@ -141,7 +139,7 @@ def list_connects():
 # def login(name):
 #     client = oauth.create_client(name)
 #     redirect_uri = url_for('authorize', name=name, _external=True)
-#     return client.authorize_redirect(redirect_uri)
+#     return cli ent.authorize_redirect(redirect_uri)
 
 def _get_service_or_404(name):
     service = get_app(name)

@@ -3,35 +3,35 @@
 {% block body %}
   <div class="row">
     <div class="col">
-        <div class="jumbotron">
+        <div class="jumbotron" id='jumbo'>
             <h1 class="display-4">Choose your cPRO tool!</h1>
             <p class="lead">{{ launch }}</p>
             <hr class="my-4">
             <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
             <p class="lead">
-                <div class="card-deck">
-                  <div class="card">
-                    <img class="card-img-top" src="..." alt="Card image cap">
+                <div class="card-deck" id='menu'>
+                  <div class="card" id='mpower-card'>
+                    <div class='card-header bg-light'><img class="img-fluid" src="{{ url_for('static', filename='images/banner_mpower_white_lg.png') }}" alt="Card image cap"></div>
+                    
                     <div class="card-body">
-                      <h5 class="card-title">Card title</h5>
-                      <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                      <p class="card-text">Describe this awesome app</p>
+                      <a href="https://mpower.cpro.cirg.washington.edu/auth/sof/launch?iss=https://cpro.cirg.washington.edu/api&launch={{launch}}" class='btn btn-primary btn-lg btn-block'>Launch mPOWEr</a>
+
                     </div>
                   </div>
-                  <div class="card">
-                    <img class="card-img-top" src="..." alt="Card image cap">
+                  <div class="card" id='p3p-card'>
+                    <div class='card-header bg-light'><img class="img-fluid" src="{{ url_for('static', filename='images/banner_usap3p.png') }}" alt="Card image cap"></div>
                     <div class="card-body">
-                      <h5 class="card-title">Card title</h5>
-                      <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-                      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                      <p class="card-text">Describe awesome app.</p>
+                      <a href="https://p3p.cpro.cirg.washington.edu/auth/sof/launch?iss=https://cpro.cirg.washington.edu/api&launch={{launch}}" class='btn btn-primary btn-lg btn-block'>Launch P3P</a>
                     </div>
                   </div>
-                  <div class="card">
-                    <img class="card-img-top" src="..." alt="Card image cap">
+                  <div class="card" id='paintracker-card'>
+                    <div class='card-header bg-light'><img class="img-fluid" src="{{ url_for('static', filename='images/banner_paintracker.png') }}" alt="Card image cap"></div>
                     <div class="card-body">
-                      <h5 class="card-title">Card title</h5>
-                      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-                      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                      <p class="card-text">Describe.</p>
+                      <a href="https://paintracker.cpro.cirg.washington.edu/auth/sof/launch?iss=https://cpro.cirg.washington.edu/api&launch={{launch}}" class='btn btn-primary btn-lg btn-block'>Launch Paintracker</a>
+
                     </div>
                   </div>
                 </div>      
