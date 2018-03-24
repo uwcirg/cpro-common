@@ -4,7 +4,7 @@ from wtforms.validators import DataRequired
 from wtforms.validators import StopValidation
 from .base import BaseForm
 from ..models import db
-from ..models.cpro import * 
+from ..models.user import User
 from ..auth import login
 
 
@@ -41,8 +41,7 @@ class UserCreationForm(BaseForm):
     def signup(self):
         email = self.email.data.lower()
         user = User(email=email)
-        user.pw = self.password.data
-
+        user.password = self.password.data
 
         try:
             db.session.add(user)

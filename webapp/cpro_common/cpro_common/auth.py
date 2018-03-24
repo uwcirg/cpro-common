@@ -36,12 +36,11 @@ def get_current_user():
 
 current_user = LocalProxy(get_current_user)
 
-
-# def fetch_token(name):
-#     user = get_current_user()
-#     conn = Connect.query.filter_by(
-#         user_id=user.id, name=name).first()
-#     return conn.to_dict()
+def fetch_token(name):
+    user = get_current_user()
+    conn = Connect.query.filter_by(
+        user_id=user.id, name=name).first()
+    return conn.to_dict()
 
 
 def require_login(f):
@@ -53,8 +52,22 @@ def require_login(f):
         return f(*args, **kwargs)
     return decorated
 
+oauth = OAuth(fetch_token=fetch_token)
+    
+def init_app(app):
+    oauth.init_app(app)
+    oauth.register('epic',
+        client_id='7024ba74-0e17-42b4-b988-7fee02f4c7e2',
+        access_token_url='',
+        authorize_url='',
+        api_base_url='',
+        client_kwargs={'scope': 'patient/* launch', 'launch': ''}
+    )
 
-# oauth = OAuth(fetch_token=fetch_token)
-
-# def init_app(app):
-#     oauth.init_app(app)
+    oauth.register('mychart',
+        client_id='419c0894-f882-4aef-976a-0cfa52b95691',
+        access_token_url='',
+        authorize_url='',
+        api_base_url='',
+        client_kwargs={'scope': 'patient/* launch', 'launch': ''}
+    )

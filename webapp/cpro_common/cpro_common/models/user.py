@@ -46,8 +46,13 @@ class User(db.Model):
             return user
         user = cls(email=profile.email, name=profile.name)
         user._password = '!'
-        with db.auto_commit():
+
+        try:
             db.session.add(user)
+            db.session.commit()
+        except:
+            db.session.rollback()
+            raise    
         return user
 
     def to_dict(self):
@@ -104,7 +109,13 @@ class Connect(db.Model):
             if expires_in:
                 conn.expires_at = int(time.time()) + expires_in
 
-        conn.sub = token['sub']
-        with db.auto_commit():
+        # TODO: Figure out why this is here:
+        # conn.sub = token['sub']
+    
+        try:
             db.session.add(conn)
+            db.session.commit()
+        except:
+            db.session.rollback()
+            raise
         return conn

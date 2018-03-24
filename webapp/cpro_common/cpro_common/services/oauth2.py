@@ -40,7 +40,7 @@ class AuthorizationCodeGrant(_AuthorizationCodeGrant):
     def parse_authorization_code(self, code, client):
         item = OAuth2AuthorizationCode.query.filter_by(
             code=code, client_id=client.client_id).first()
-        if item and not item.is_expired():
+        if item: # and not item.is_expired():
             return item
 
     def delete_authorization_code(self, authorization_code):

@@ -1,13 +1,15 @@
-{% extends "base.html" %}
+{% extends "client/base.html" %}
 {% from "macros.html" import render_form %}
 
-{% block body %}
-  <section class="section">
-    <div class="inner">
-      <form class="mini-form" action="" method="post">
-        {{ render_form(form) }}
-        <button class="btn">Update</button>
+{% block client %}
+<div class='card'>
+    <div class='card-header'>Edit Client</div>
+    <div class='card-body'>
+      <form action="" method="post">
+     {{ render_form(form) }}
+        <button class="btn btn-primary btn-lg btn-block">Update</button>
       </form>
+
     </div>
-  </section>
+  </div>
 {% endblock %}

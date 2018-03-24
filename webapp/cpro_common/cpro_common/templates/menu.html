@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block body %}
+  <div class="row">
+    <div class="col">
+        <div class="jumbotron" id='jumbo'>
+            <h1 class="display-4">cPRO</h1>
+            <p class="lead">Health Assessments and Intervention</p>
+            <hr class="my-4">
+            <p class="lead">
+                <div class="card-deck" id='menu'>
+                  <div class="card" id='mpower-card'>
+                    <div class='card-header bg-light'><img class="img-fluid" src="{{ url_for('static', filename='images/banner_mpower_white_lg.png') }}" alt="Card image cap"></div>
+                    
+                    <div class="card-body">
+                      <p class="card-text"> A patient-centered app for tracking surgical wound healing, at home</p>
+                      <a href="https://mpower.cpro.cirg.washington.edu/auth/sof/launch?iss=https://cpro.cirg.washington.edu/api&launch={{launch}}" class='btn btn-primary btn-lg btn-block'>Launch mPOWEr</a>
+
+                    </div>
+                  </div>
+                  <div class="card" id='p3p-card'>
+                    <div class='card-header bg-light'><img class="img-fluid" src="{{ url_for('static', filename='images/banner_usap3p.png') }}" alt="Card image cap"></div>
+                    <div class="card-body">
+                      <p class="card-text">Helping you make decisions about prostate cancer treatment</p>
+                      <a href="https://p3p.cpro.cirg.washington.edu/auth/sof/launch?iss=https://cpro.cirg.washington.edu/api&launch={{launch}}" class='btn btn-primary btn-lg btn-block'>Launch P3P</a>
+                    </div>
+                  </div>
+                  <div class="card" id='paintracker-card'>
+                    <div class='card-header bg-light'><img class="img-fluid" src="{{ url_for('static', filename='images/banner_paintracker.png') }}" alt="Card image cap"></div>
+                    <div class="card-body">
+                      <p class="card-text">Track your recovery from chronic pain</p>
+                      <a href="https://paintracker.cpro.cirg.washington.edu/auth/sof/launch?iss=https://cpro.cirg.washington.edu/api&launch={{launch}}" class='btn btn-primary btn-lg btn-block'>Launch Paintracker</a>
+
+                    </div>
+                  </div>
+                </div>      
+              </p>
+          </div>
+
+      </div>
+
+      
+    </div>
+  </div>
+  
+{% endblock %}
