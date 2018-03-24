@@ -5,19 +5,25 @@ from ..auth import oauth, require_login, current_user
 
 bp = Blueprint('api', __name__)
 
-@bp.route('/patient/<int:id>')
-@require_login
-def patient(id):
-    return Response(session['patient_data'], mimetype='text/xml')
+@bp.route('/Patient')
+def patient():
+    pdata = """
+        <Patient xmlns="http://hl7.org/fhir"><birthDate value="1948-07-07" /><active value="true" /><gender value="M" /><deceasedBoolean value="false" /><id value="T81lum-5p6QvDR7l6hv7lfE52bAbA2ylWBnv9CZEzNb0B" /><careProvider><display value="Physician Family Medicine, MD" /><reference value="https://ic-fhirworks.epic.com/interconnect-fhirworks-oauth/api/FHIR/DSTU2/Practitioner/Thh97FZ9lU9.p-Rgpozo6vwB" /></careProvider><name><use value="usual" /><family value="Mychart" /><given value="Theodore" /><prefix value="MR." /></name><identifier><use value="usual" /><system value="urn:oid:1.2.840.114350.1.13.0.1.7.5.737384.0" /><value value="E2734" /></identifier><identifier><use value="usual" /><system value="urn:oid:1.2.840.114350.1.13.0.1.7.5.737384.14" /><value value="202500" /></identifier><identifier><use value="usual" /><system value="urn:oid:2.16.840.1.113883.4.1" /><extension url="http://hl7.org/fhir/StructureDefinition/rendered-value"><valueString value="xxx-xx-4199" /></extension></identifier><address><use value="home" /><line value="134 Elm Street" /><city value="Madison" /><state value="WI" /><postalCode value="53706" /><country value="US" /></address><telecom><system value="phone" /><value value="608-213-5806" /><use value="home" /></telecom><telecom><system value="phone" /><value value="608-272-5000" /><use value="work" /></telecom><maritalStatus><text value="Married" /></maritalStatus><communication><preferred value="true" /><language><text value="Sign Languages" /></language></communication><extension url="http://hl7.org/fhir/StructureDefinition/us-core-race"><valueCodeableConcept><text value="White" /><coding><system value="2.16.840.1.113883.5.104" /><code value="2106-3" /><display value="White" /></coding></valueCodeableConcept></extension><extension url="http://hl7.org/fhir/StructureDefinition/us-core-ethnicity"><valueCodeableConcept><text value="Unknown" /><coding><system value="2.16.840.1.113883.5.50" /><code value="UNK" /><display value="Unknown" /></coding></valueCodeableConcept></extension><extension url="http://hl7.org/fhir/StructureDefinition/us-core-birth-sex"><valueCodeableConcept><text value="Male" /><coding><system value="http://hl7.org/fhir/v3/AdministrativeGender" /><code value="M" /><display value="Male" /></coding></valueCodeableConcept></extension></Patient>
+    """
+    return Response(pdata, mimetype='text/xml')
+
+@bp.route('/Patient/<int:id>')
+def patient_new(id):
+    pdata = """
+        <Patient xmlns="http://hl7.org/fhir"><birthDate value="1948-07-07" /><active value="true" /><gender value="M" /><deceasedBoolean value="false" /><id value="T81lum-5p6QvDR7l6hv7lfE52bAbA2ylWBnv9CZEzNb0B" /><careProvider><display value="Physician Family Medicine, MD" /><reference value="https://ic-fhirworks.epic.com/interconnect-fhirworks-oauth/api/FHIR/DSTU2/Practitioner/Thh97FZ9lU9.p-Rgpozo6vwB" /></careProvider><name><use value="usual" /><family value="Mychart" /><given value="Theodore" /><prefix value="MR." /></name><identifier><use value="usual" /><system value="urn:oid:1.2.840.114350.1.13.0.1.7.5.737384.0" /><value value="E2734" /></identifier><identifier><use value="usual" /><system value="urn:oid:1.2.840.114350.1.13.0.1.7.5.737384.14" /><value value="202500" /></identifier><identifier><use value="usual" /><system value="urn:oid:2.16.840.1.113883.4.1" /><extension url="http://hl7.org/fhir/StructureDefinition/rendered-value"><valueString value="xxx-xx-4199" /></extension></identifier><address><use value="home" /><line value="134 Elm Street" /><city value="Madison" /><state value="WI" /><postalCode value="53706" /><country value="US" /></address><telecom><system value="phone" /><value value="608-213-5806" /><use value="home" /></telecom><telecom><system value="phone" /><value value="608-272-5000" /><use value="work" /></telecom><maritalStatus><text value="Married" /></maritalStatus><communication><preferred value="true" /><language><text value="Sign Languages" /></language></communication><extension url="http://hl7.org/fhir/StructureDefinition/us-core-race"><valueCodeableConcept><text value="White" /><coding><system value="2.16.840.1.113883.5.104" /><code value="2106-3" /><display value="White" /></coding></valueCodeableConcept></extension><extension url="http://hl7.org/fhir/StructureDefinition/us-core-ethnicity"><valueCodeableConcept><text value="Unknown" /><coding><system value="2.16.840.1.113883.5.50" /><code value="UNK" /><display value="Unknown" /></coding></valueCodeableConcept></extension><extension url="http://hl7.org/fhir/StructureDefinition/us-core-birth-sex"><valueCodeableConcept><text value="Male" /><coding><system value="http://hl7.org/fhir/v3/AdministrativeGender" /><code value="M" /><display value="Male" /></coding></valueCodeableConcept></extension></Patient>
+    """
+    return Response(pdata, mimetype='text/xml')
+
 
 @bp.route('/metadata')
 def metadata():
     conf_xml = """
         <Conformance xmlns="http://hl7.org/fhir">
-
-        <status value="active"/>
-        <experimental value="true"/>
-        <format value="xml"/>
         <rest>
         <mode value="server"/>
         <security>
@@ -55,60 +61,6 @@ def metadata():
         </extension>
         </extension>
         </security>
-        <resource>
-        <type value="Patient"/>
-        <readHistory value="false"/>
-        <updateCreate value="false"/>
-        <conditionalCreate value="false"/>
-        <conditionalUpdate value="false"/>
-        <conditionalDelete value="not-supported"/>
-        <interaction>
-        <code value="read"/>
-        </interaction>
-        <interaction>
-        <code value="search-type"/>
-        </interaction>
-        <searchParam>
-        <name value="_id"/>
-        <type value="token"/>
-        <documentation value="Search for Patient resources using one or more server ids (equivalent to one or more Get /Patient/{ID} requests). If _id is included in your search, all other parameters are ignored."/>
-        </searchParam>
-        <searchParam>
-        <name value="identifier"/>
-        <type value="token"/>
-        <documentation value="Search for Patient resources by a patient's identifier. You can use the identifier parameter as the only parameter in a search or in conjunction with other parameters. Queries must be in the format [OID]|[ID], where [OID] is the HL7 root of the identifier type. You can find this value in the Identifier.System field of a resource. If the query doesn't include an OID, the system searches over all patient identifier types."/>
-        </searchParam>
-        <searchParam>
-        <name value="family"/>
-        <type value="string"/>
-        <documentation value="Search for Patient resources by family (last) name. You can use the family parameter along with the given (name) parameter to search by a patient's name or in conjunction with the birthdate parameter. Family name searching supports exact matching, "sounds like" matching, and patient aliases."/>
-        </searchParam>
-        <searchParam>
-        <name value="given"/>
-        <type value="string"/>
-        <documentation value="Search for Patient resources by given (first) name. You must use the given parameter along with the family (name) parameter to search by a patient's name. Given name searching supports both exact and "sounds like" matches. Patient aliases and dominant name aliases (ex. Bob for Robert) are also supported."/>
-        </searchParam>
-        <searchParam>
-        <name value="birthdate"/>
-        <type value="date"/>
-        <documentation value="Search for Patient resources using a date of birth in ISO format (YYYY-MM-DD). You must use this parameter with at least one other search parameter (excluding given and gender)."/>
-        </searchParam>
-        <searchParam>
-        <name value="address"/>
-        <type value="string"/>
-        <documentation value="Search for Patient resources using an address string. You must use this parameter with one of the following parameters: identifier, telecom, family and given, or birthdate."/>
-        </searchParam>
-        <searchParam>
-        <name value="gender"/>
-        <type value="token"/>
-        <documentation value="Search for Patient resources using the following gender codes: female, male, other, or unknown. You must use this parameter with one of the following sets of parameters: identifier, telecom, or family and given. Setting this parameter will filter results."/>
-        </searchParam>
-        <searchParam>
-        <name value="telecom"/>
-        <type value="string"/>
-        <documentation value="Search for Patient resources using a patient's home, cell phone number, or email address. You can use this parameter as the only parameter in a search if it is set to a phone number. If an email address is entered, you must use this parameter with one of the following parameters: identifier, family and given, or birthdate. Queries can be formatted with or without dashes."/>
-        </searchParam>
-        </resource>    
         </rest>
         </Conformance>
         """

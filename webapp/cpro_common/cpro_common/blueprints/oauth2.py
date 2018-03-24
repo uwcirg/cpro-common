@@ -1,17 +1,22 @@
 from flask import Blueprint, request
-from flask import jsonify, render_template, current_app
+from flask import jsonify, render_template, current_app, session
 from authlib.specs.rfc6749 import OAuth2Error
 from ..models import OAuth2Client
+from ..models.user import User
 from ..auth import current_user
 from ..forms.auth import ConfirmForm, LoginConfirmForm
 from ..services.oauth2 import authorization, scopes
 
+from ..auth import login
 
 bp = Blueprint('oauth2', __name__)
 
 
 @bp.route('/authorize', methods=['GET', 'POST'])
 def authorize():
+    current_app.logger.info(current_user)
+    current_app.logger.info(session)
+    
     if current_user:
         form = None
     else: 
@@ -41,8 +46,17 @@ def authorize():
 
 @bp.route('/token', methods=['POST', 'GET'])
 def issue_token(): 
-    current_app.logger.info("HI THERE")
-    return authorization.create_token_response()
+    user = User.query.filter_by(name='UWASH03').first()
+    login(user, True)
+
+    session['EPICUSERID'] = 'UWASH03'
+    session['PATID'] = '202500'
+    session['patient'] = 'T81lum-5p6QvDR7l6hv7lfE52bAbA2ylWBnv9CZEzNb0B'
+
+    current_app.logger.info(request)
+    current_app.logger.info(session)
+    current_app.logger.info(current_user)
+    return authorization.create_token_response(session, current_app)
 
  
 @bp.route('/revoke', methods=['POST', 'GET'])
